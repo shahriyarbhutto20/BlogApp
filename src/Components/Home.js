@@ -1,35 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import BlogList from "./BlogList";
 
 function Home() {
-  const [blogs, setBlogs] = useState([
-    {
-      title: "My new website",
-      body: "lorem",
-      autor: "Ali",
-      id: 1,
-    },
-    {
-      title: "Welcome Party",
-      body: "lorem",
-      autor: "Haider",
-      id: 2,
-    },
-    {
-      title: "Web Dev Top Tips",
-      body: "lorem",
-      autor: "Umer",
-      id: 3,
-    },
-  ]);
+  const [blogs, setBlogs] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/blogs")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setBlogs(data);
+        setIsPending(false);
+      });
+  }, []);
 
   return (
     <div className="Homepage">
-      {blogs.map((blog) => (
-        <div className="blog-preview" key={blog.id}>
-          <h2>{blog.title}</h2>
-          <p>Written by {blog.autor}</p>
-        </div>
-      ))}
+      {isPending && <h3>Loading ............</h3>}
+      {blogs && <BlogList blogs={blogs} title="All Blogs!" />}
     </div>
   );
 }
