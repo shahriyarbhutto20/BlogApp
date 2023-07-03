@@ -1,12 +1,14 @@
-import Home from "./Components/Home";
+// import Home from "./Components/Home";
 import Navbar from "./Components/Navbar";
+import Routing from "./Routing/Routing";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
       <div className="content">
-        <Home />
+        {/* <Home /> */}
+        <Routing />
       </div>
     </div>
   );
